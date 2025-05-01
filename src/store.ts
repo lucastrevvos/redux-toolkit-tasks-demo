@@ -6,6 +6,7 @@ import filterReducer from "./features/filter/filterSlice";
 import counterReducer from "./features/counter/counterSlice";
 
 import { loadState, saveState } from "./utils/localStorage";
+import { loggerMiddleware } from "./middleware/logger";
 
 const preloadedTasks = loadState();
 
@@ -19,6 +20,8 @@ export const store = configureStore({
   preloadedState: {
     tasks: preloadedTasks || [],
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(loggerMiddleware),
 });
 
 store.subscribe(() => {
